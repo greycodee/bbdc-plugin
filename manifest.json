@@ -1,0 +1,14 @@
+{
+  "name": "我的词库",
+  "description": "添加单词到词库，可以上传到『不背单词』自定义词库",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches":  ["<all_urls>"],
+      "js": ["core/core.js"],
+      "css": ["core/panel.css"]
+    }
+  ]
+
+}
