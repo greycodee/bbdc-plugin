@@ -3,11 +3,25 @@
   "description": "添加单词到词库，可以上传到『不背单词』自定义词库",
   "version": "1.0",
   "manifest_version": 3,
+  "background":{
+    "service_worker": "background.js"
+  },
+  "host_permissions":["<all_urls>"],
+  "permissions": [
+    "cookies",
+    "tabs"
+  ]
+  ,
   "content_scripts": [
     {
       "matches":  ["<all_urls>"],
-      "js": ["core/core.js"],
-      "css": ["core/panel.css"]
+      "js": [
+        "core/js/jquery.min.js",
+        "core/js/Tip.js",
+        "core/js/core.js"
+        
+      ],
+      "css": ["core/css/main.css"]
     }
   ]
 

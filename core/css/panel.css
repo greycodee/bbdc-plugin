@@ -1,6 +1,9 @@
 .text{
     background-color: rgb(35, 132, 216);
-    width: 50px;
-    height: 200px;
     position: fixed; left:10px ;top: 150px;
+    opacity: 0;
+}
+
+.text.show{
+    opacity: 1;
 }
