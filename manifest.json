@@ -9,7 +9,8 @@
   "host_permissions":["<all_urls>"],
   "permissions": [
     "cookies",
-    "tabs"
+    "tabs",
+    "storage"
   ]
   ,
   "content_scripts": [
@@ -17,11 +18,11 @@
       "matches":  ["<all_urls>"],
       "js": [
         "core/js/jquery.min.js",
-        "core/js/Tip.js",
+        "core/js/tips.js",
         "core/js/core.js"
         
       ],
-      "css": ["core/css/main.css"]
+      "css": ["core/css/tips.css"]
     }
   ]
 

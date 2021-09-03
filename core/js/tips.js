@@ -99,6 +99,9 @@ class Tip {
     // 创建dom
     let container = `
     <div class="tip-container">
+
+        <button type="button" class="add-btn" id="add-words">添加单词</button>
+       
         <div class="tip-content">
         </div>
         <div class="bouncing-loader" id="tip-loading-container">

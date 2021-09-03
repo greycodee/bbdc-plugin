@@ -2,7 +2,7 @@
 
 const tip = new Tip();
 
-const DURATION = 300;
+const DURATION = 100;
 
 const [mouseupListener, immediatelyStop] = debounce(async () => {
   // 获取选中文字 以及位置、宽高等信息
@@ -11,6 +11,7 @@ const [mouseupListener, immediatelyStop] = debounce(async () => {
   const now = Date.now();
   tip.showEmptyView(rect, now);
   tip.showFromGoogleApi({ result: seleStr, rect, now });
+//   tip.showFromBaiduApi({ resList: seleStr, rect, now });
 //   chrome.storage.sync.get(["baiduTranslate", "googleTranslate"], function({
 //     baiduTranslate,
 //     googleTranslate
@@ -48,9 +49,27 @@ function getSelectPos() {
 function debounce(fun) {
     let timer = null;
     return [function() {
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        fun.call();
-      }, DURATION);
-    }, function () { clearTimeout(timer) }]
-  }
+                    clearTimeout(timer);
+                    timer = setTimeout(function() {
+                        fun.call();
+                    }, DURATION);
+                }, function () { 
+                    clearTimeout(timer) 
+                }
+            ] 
+}
+
+function sendMsg(msg){
+    chrome.runtime.sendMessage({type: "addWords",msg:msg}, function(response) {
+        console.log(response);
+      });
+}
+
+  // 添加单词
+$('#add-words').on('click', function(){
+    let word = $('.tip-content').text();
+    sendMsg(word);
+    console.log(word)
+})
+
+

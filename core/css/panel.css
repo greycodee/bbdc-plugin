@@ -1,9 +1,0 @@
-.text{
-    background-color: rgb(35, 132, 216);
-    position: fixed; left:10px ;top: 150px;
-    opacity: 0;
-}
-
-.text.show{
-    opacity: 1;
-}

@@ -1,60 +1,46 @@
-// chrome.runtime.onInstalled.addListener(()=>{
-//     console.log("background.")
-//     chrome.cookies.get({"url":"https://juejin.cn/","name":"sessionid"},data => {
-//         console.log("cookies===")
-//         console.log(data)
-//     })
-// })
-
-// console.log("background")
-
-// 接收消息
-
-// chrome.tabs.query({active: true, currentWindow: true},function(tabs) {
-//     chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
-//         console.log(response);
-//     });
-//   }); 
-
+chrome.runtime.onInstalled.addListener(function(){
+    console.log("安装成功");
+    let words = new Set();
+    chrome.storage.sync.set({words:words},function(){
+        console.log(chrome.runtime.lastError)
+    })
+})
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request, sender);
-    get_cookies();
-    sendResponse('我收到你的消息了：'+request.msg);
+    let type = request.type
+    console.log(request)
+    switch (type) {
+        case "addWords":
+            console.log("添加单词:",request.msg)
+            addWords(request.msg)
+            break;
+    
+        default:
+            console.log("为匹配")
+            break;
+    }
+    // sendResponse('我收到你的消息了：'+request.msg);
 });
 
-
-let bbdc_cookie = "";
 
 // 获取 不背单词 cookies
 function get_cookies(){
     let url = "https://bbdc.cn/";
-    // let url = "https://juejin.cn/";
-    // let UM_distinctid = "";
-    // chrome.cookies.get({"url":url , "name":"UM_distinctid"},data =>{
-    //     console.log(data);
-    //     UM_distinctid = data;
-    //     bbdc_cookie = ""
-    // });
-    // let acw_tc = chrome.cookies.get({"url":url , "name":"acw_tc"});
-    // let JSESSIONID = chrome.cookies.get({"url":url , "name":"JSESSIONID"});
-    // let CNZZDATA1278624702 = chrome.cookies.get({"url":url , "name":"CNZZDATA1278624702"});
-    // let Hm_lvt_29659c8bfef38cfbaca18955f0ff8f6f = chrome.cookies.get({"url":url , "name":"Hm_lvt_29659c8bfef38cfbaca18955f0ff8f6f"});
-    // let hanhan = chrome.cookies.get({"url":url , "name":"hanhan"});
-    // let Hm_lpvt_29659c8bfef38cfbaca18955f0ff8f6f = chrome.cookies.get({"url":url , "name":"Hm_lpvt_29659c8bfef38cfbaca18955f0ff8f6f"});
-    // console.log(UM_distinctid)
-
-    // let cookies = "UM_distinctid="+UM_distinctid+
-    //     ";acw_tc="+acw_tc+";JSESSIONID="+JSESSIONID+
-    //     ";CNZZDATA1278624702="+CNZZDATA1278624702+
-    //     ";Hm_lvt_29659c8bfef38cfbaca18955f0ff8f6f="+Hm_lvt_29659c8bfef38cfbaca18955f0ff8f6f+
-    //     ";hanhan="+hanhan+
-    //     ";Hm_lpvt_29659c8bfef38cfbaca18955f0ff8f6f="+Hm_lpvt_29659c8bfef38cfbaca18955f0ff8f6f;
-
-    // console.log(cookies)
-
     chrome.cookies.getAll({url:url,path:"/",domain:".bbdc.cn"},data => {
         console.log(data);
         console.log(data.map(c => c.name+"="+c.value).join(';'))
     })
+}
+
+
+function addWords(word) {
+    chrome.storage.sync.set({word:word},function(){
+        console.log(chrome.runtime.lastError)
+    });
+    return "添加成功";
+}
+
+function getAllWords(){
+
 }
