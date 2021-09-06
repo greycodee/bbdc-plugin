@@ -60,7 +60,7 @@ function debounce(fun) {
 }
 
 function sendMsg(msg){
-    chrome.runtime.sendMessage({type: "addWords",msg:msg}, function(response) {
+    chrome.runtime.sendMessage({type: "add-words",msg:msg}, function(response) {
         console.log(response);
       });
 }
