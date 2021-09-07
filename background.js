@@ -1,4 +1,3 @@
-
 chrome.runtime.onInstalled.addListener(function(){
     console.log("安装成功");
     let words = new Set();
@@ -20,13 +19,25 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
             console.log("添加单词:",request.msg)
             addWords(request.msg)
             getAllWords()
+            sendResponse('我收到你的消息了：'+request.msg);
             break;
-    
+        case "get-all-words":
+           
+            chrome.storage.sync.get(null,data=>{
+                console.log(data.words)
+                if(chrome.runtime.lastError){
+                    sendResponse('获取失败:',chrome.runtime.lastError);
+                }else {
+                    sendResponse(data.words);
+                }
+            })
+            break;
         default:
-            console.log("为匹配")
+            console.log("未匹配")
             break;
     }
-    sendResponse('我收到你的消息了：'+request.msg);
+   
+    return true;
 });
 
 
@@ -45,7 +56,6 @@ function addWords(word) {
         if (chrome.runtime.lastError) {
             console.log("获取失败：",chrome.runtime.lastError)
         }else{
-            console.log(data)
             let tmpWords = new Set(data.words);
             tmpWords.add(word);
             chrome.storage.sync.set({"words":[...tmpWords]},function(){
@@ -60,19 +70,8 @@ function addWords(word) {
 
 function getAllWords(){
     chrome.storage.sync.get(null,data=>{
-        console.log(data)
-    })
-}
-
-function getStorage(key){
-    let words = ["888"]
-    chrome.storage.sync.get(key,data=>{
-        if (chrome.runtime.lastError) {
-            console.log("获取失败：",chrome.runtime.lastError)
-        }else{
-            console.log(data)
-            words = data;
+        if(chrome.runtime.lastError){
+            console.log("添加失败:",chrome.runtime.lastError)
         }
     })
-    return words
 }

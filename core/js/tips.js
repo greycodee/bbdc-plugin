@@ -1,3 +1,8 @@
+/**
+ * 悬浮窗定义
+ * 用于显示气泡窗口
+ */
+
 class Tip {
   constructor() {
     // 初始化tip 并追加至body

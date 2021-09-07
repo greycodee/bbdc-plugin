@@ -17,13 +17,16 @@
     {
       "matches":  ["<all_urls>"],
       "js": [
-        "core/js/jquery.min.js",
+        "core/lib/jquery.min.js",
         "core/js/tips.js",
         "core/js/core.js"
         
       ],
       "css": ["core/css/tips.css"]
     }
-  ]
+  ],
+  "action":{
+    "default_popup": "core/html/popup.html"
+  }
 
 }

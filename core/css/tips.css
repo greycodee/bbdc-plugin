@@ -1,3 +1,8 @@
+/**
+* 定义气泡窗口的样式
+*/
+
+
 .translateX {
   position: fixed;
   background-color: #fff !important;

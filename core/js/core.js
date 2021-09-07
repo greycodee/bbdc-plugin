@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * 划词事件
+ * 定义划词后要处理的事件
+ */
 
 const tip = new Tip();
 
@@ -48,15 +52,17 @@ function getSelectPos() {
 }
 function debounce(fun) {
     let timer = null;
-    return [function() {
-                    clearTimeout(timer);
-                    timer = setTimeout(function() {
-                        fun.call();
-                    }, DURATION);
-                }, function () { 
-                    clearTimeout(timer) 
-                }
-            ] 
+    return [
+      function() {
+          clearTimeout(timer);
+          timer = setTimeout(function() {
+              fun.call();
+          }, DURATION);
+      }, 
+      function () { 
+          clearTimeout(timer) 
+      }
+    ] 
 }
 
 function sendMsg(msg){
@@ -69,7 +75,7 @@ function sendMsg(msg){
 $('#add-words').on('click', function(){
     let word = $('.tip-content').text();
     sendMsg(word);
-    console.log(word)
+    tip.hide();
 })
 
 
