@@ -31,8 +31,23 @@ class Tip {
    * google api 显示tip
    */
   showFromGoogleApi({ result, rect, now }) {
+    let elementArr = []
+    elementArr.push('<h1>'+result.key+'</h1>')
+    result.means.forEach(item => {
+      let val = item.part+" ";
+      let means = [];
+      item.means.forEach(m=>{
+        means.push(m)
+      })
+
+      val = val + means.join(",");
+      let elem = '<p>'+val+'</p>';
+      elementArr.push(elem)
+    });
+
+    console.log(elementArr)
     this.opTip({
-      eleArr: [`<p class="google-result">${result}</p>`],
+      eleArr: elementArr,
       rect,
       now
     })

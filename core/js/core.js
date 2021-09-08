@@ -9,25 +9,22 @@ const tip = new Tip();
 const DURATION = 100;
 
 const [mouseupListener, immediatelyStop] = debounce(async () => {
+
   // 获取选中文字 以及位置、宽高等信息
   let { rect, seleStr = "" } = getSelectPos();
   if (!seleStr.trim()) return tip.hide();
-  const now = Date.now();
-  tip.showEmptyView(rect, now);
-  tip.showFromGoogleApi({ result: seleStr, rect, now });
-//   tip.showFromBaiduApi({ resList: seleStr, rect, now });
-//   chrome.storage.sync.get(["baiduTranslate", "googleTranslate"], function({
-//     baiduTranslate,
-//     googleTranslate
-//   }) {
-    
-//     chrome.runtime.sendMessage({ select: seleStr }, function(response) {
-// 			const { baidu, google } = response;
 
-//       googleTranslate && tip.showFromGoogleApi({ result: google, rect, now });
-//       baiduTranslate && tip.showFromBaiduApi({ resList: baidu, rect, now });
-//     });
-//   });
+  // 英语单词正则
+  let regx = /^[A-Za-z]+$/
+  if (!regx.test(seleStr)) return tip.hide();
+
+  chrome.runtime.sendMessage({type: "translate",msg:seleStr}, function(response) {
+    console.log(response);
+    const now = Date.now();
+    tip.showEmptyView(rect, now);
+    tip.showFromGoogleApi({ result: response, rect, now });
+  });
+
 });
 
 // 监听鼠标抬起 显示tip
@@ -73,8 +70,8 @@ function sendMsg(msg){
 
   // 添加单词
 $('#add-words').on('click', function(){
-    let word = $('.tip-content').text();
-    sendMsg(word);
+    let { rect, seleStr = "" } = getSelectPos();
+    sendMsg(seleStr);
     tip.hide();
 })
 

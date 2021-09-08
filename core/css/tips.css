@@ -20,6 +20,7 @@
   display: none;
   z-index: 99999;
   transition-duration: 0.2s;
+  width: 300px;
 }
 .tip-container p {
   margin: 0 8px !important;
